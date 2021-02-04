@@ -1,0 +1,72 @@
+<form [formGroup]="paymentForm"
+      *ngIf="!isSubmitted; else responseBlock"
+      (ngSubmit)="onSubmit()"
+      novalidate>
+    <div class="input-field">
+        <select #selectField
+                formControlName="cardTypes"
+                (change)="onChange(paymentForm.get('cardTypes').value)">
+            <option value="" disabled selected>- Select Card Types -</option>
+            <option *ngFor="let card of cardTypesList" [ngValue]="card">
+                {{card.value}}
+            </option>
+        </select>
+        <label>Card Types</label>
+    </div>
+    <div class="input-field">
+        <input class="validate"
+               formControlName="cardNumber"
+               type="number">
+        <label>Card Number</label>
+        <span class="helper-text" 
+              *ngIf="paymentForm.get('cardNumber').invalid && paymentForm.get('cardNumber').touched">
+            Please enter the correct card number
+        </span>
+    </div>
+    <div class="input-field">
+        <input class="validate"
+               formControlName="expiry"
+               placeholder="MM/YY"
+               type="text">
+        <label>Expiry</label>
+        <span class="helper-text" 
+              *ngIf="paymentForm.get('expiry').invalid && paymentForm.get('expiry').touched">
+            Please enter the correct expiry
+        </span>
+    </div>
+    <div class="input-field">
+        <input class="validate"
+               formControlName="name"
+               type="text">
+        <label>Name</label>
+        <span class="helper-text" 
+              *ngIf="paymentForm.get('name').invalid && paymentForm.get('name').touched">
+            Please enter the correct name
+        </span>
+    </div>
+    <div class="input-field">
+        <input class="validate"
+               formControlName="email"
+               type="email">
+        <label>Email</label>
+        <span class="helper-text" 
+              *ngIf="paymentForm.get('email').invalid && paymentForm.get('email').touched">
+            Please enter the correct email
+        </span>
+    </div>
+
+    <button class="modal-action btn waves-effect" 
+            type="submit"
+            [disabled]="paymentForm.invalid || paymentForm.disabled">
+        Payment
+    </button>
+
+    <app-loader *ngIf="isLoading"></app-loader>
+</form>
+
+<ng-template #responseBlock>
+    <p [ngClass]="[response.responseCode === '00' ? 'blue-text' : 'red-text']">
+        {{response.responseMessage}}<br>
+        Invoice: {{response.invoiceNo}}
+    </p>
+</ng-template>

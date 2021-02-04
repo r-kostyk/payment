@@ -1,0 +1,13 @@
+form {
+    max-width: 400px;
+    padding: 20px;
+    position: relative;
+
+    label {
+        z-index: -1;
+    }
+    
+    .helper-text {
+        color: #f44336;
+    }
+}

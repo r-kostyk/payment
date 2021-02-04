@@ -1,0 +1,7 @@
+<ul>
+    <li *ngFor="let product of products">
+        <span>Product:</span> {{product.name}}<br />
+        <span>Date:</span> {{product.date | date: 'MM/dd/YYYY HH:mm:ss'}}<br />
+        <span>Amount:</span> {{product.amount}} {{currency}}
+    </li>
+</ul>
